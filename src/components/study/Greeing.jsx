@@ -1,12 +1,9 @@
 //rafce  <-- 리엑트 기본구문 자동완성 키
-import React from 'react'
+import React from "react";
 
-const Greeing = () => {
-  return (
-    <div className='greeting'>
-        안녕하세요. 꽁이님!
-    </div>
-  )
-}
+//props로 데이터 받아옴
+const Greeing = ({ username = "사용자" }) => {
+  return <div className="greeting">안녕하세요. {username}님!</div>;
+};
 
-export default Greeing
+export default Greeing;

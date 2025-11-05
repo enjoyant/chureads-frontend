@@ -5,7 +5,6 @@ import SignUp from "./pages/SignUp";
 import Post from "./pages/Post";
 import Profile from "./pages/Profile";
 import Edit from "./pages/Edit";
-import Greeing from "./components/study/Greeing";
 import Study from "./pages/Study";
 
 function App() {
@@ -28,13 +27,6 @@ function App() {
         </BrowserRouter>
       </div>
     </div>
-
-    // <div className="wrap">
-    //   Hellow react!
-    //   <section>
-    //     <Greeing />
-    //   </section>
-    // </div>
   );
 }
 
