@@ -35,7 +35,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    //로그인이 이미 된 경우에 홈으로 이동
+    //아래는 조건문임...로그인이 이미 된 경우에 홈으로 이동
     currentUser && history("/");
   });
 
