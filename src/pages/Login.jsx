@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import InputField from "../components/InputField";
 import LoginButton from "../components/LoginButton";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../firebase";
 
 const Login = () => {
   // logic
+  const history = useNavigate();
+
+  const currentUser = auth.currentUser;
 
   const handleInputChange = (inputValue, field) => {
     // TODO: 사용자 입력 기능 구현
@@ -22,13 +25,19 @@ const Login = () => {
     try {
       // 1. 팝업뛰어 로그인
       await signInWithPopup(auth, provider);
-      console.log("구글 로그인 완료", auth);
+      // console.log("구글 로그인 완료", auth);
 
       // 2. Home화면이동
+      history("/");
     } catch (error) {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    //로그인이 이미 된 경우에 홈으로 이동
+    currentUser && history("/");
+  });
 
   // view
   return (
