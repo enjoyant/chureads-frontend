@@ -18,7 +18,30 @@ const Post = () => {
     setChuread(value);
   };
 
-  const handlePost = (event) => {
+  // POST /posts - 새 게시물 작성
+  const createPost = async (postData) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/posts`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(postData), //json형태로 보내야 함
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json(); //자바스크립트 객체로 변환
+      return result;
+    } catch (error) {
+      console.error("게시물 작성 실패:", error);
+      throw error;
+    }
+  };
+
+  const handlePost = async (event) => {
     event.preventDefault(); // 폼 제출시 새로고침 방지 메소드
 
     // 1. 텍스트에서 불필요한 공백 제거하기
@@ -43,6 +66,9 @@ const Post = () => {
         "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
       content: resultChuread,
     };
+
+    const result = await createPost(newItem);
+    console.log("🚀 ~ handlePost ~ result:", result);
 
     history("/"); // home화면으로 이동
   };
