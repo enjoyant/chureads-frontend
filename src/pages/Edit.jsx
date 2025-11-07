@@ -49,7 +49,6 @@ const Edit = () => {
     const editItem = { ...feedItem, content: value }; //기존항목(feedItem)에 content만 수정함
 
     const result = await updatePost(editItem._id, editItem);
-    console.log("🚀 ~ handleEdit ~ result:", result);
     result.acknowledged //변경성공?
       ? history("/")
       : alert("게시물이 제대로 수정되지 않았습니다");
@@ -70,7 +69,6 @@ const Edit = () => {
 
         const post = await response.json();
         post && setFeedItem(post);
-        console.log("🚀 ~ fetchPost ~ post:", post);
         return post;
       } catch (error) {
         console.error("게시물 조회 실패:", error);

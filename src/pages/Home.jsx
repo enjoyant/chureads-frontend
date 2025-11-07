@@ -46,7 +46,6 @@ const Home = () => {
   const handleDelete = async (selectedItem) => {
     // TODO: 백엔드에 Delete 요청
     const result = await deletePost(selectedItem._id);
-    console.log("🚀 ~ handleDelete ~ result:", result);
     const filterList = feedList.filter((feed) => feed._id !== result.id);
     setFeedList(filterList);
   };
@@ -62,7 +61,6 @@ const Home = () => {
       try {
         const response = await fetch(`${API_BASE_URL}/posts`); //자바스크립트 내장함수
         const result = await response.json();
-        console.log("🚀 ~ fetchPosts ~ result:", result);
         setFeedList(result);
       } catch (error) {
         console.error(`게시물 조회 실패: ${error}`);

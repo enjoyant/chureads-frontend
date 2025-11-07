@@ -14,12 +14,15 @@ const Post = () => {
 
   const [churead, setChuread] = useState("");
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleChange = (value) => {
     setChuread(value);
   };
 
   // POST /posts - 새 게시물 작성
   const createPost = async (postData) => {
+    setIsLoading(true);
     try {
       const response = await fetch(`${API_BASE_URL}/posts`, {
         method: "POST",
@@ -38,6 +41,8 @@ const Post = () => {
     } catch (error) {
       console.error("게시물 작성 실패:", error);
       throw error;
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -68,9 +73,7 @@ const Post = () => {
     };
 
     const result = await createPost(newItem);
-    console.log("🚀 ~ handlePost ~ result:", result);
-
-    history("/"); // home화면으로 이동
+    result && history("/"); // home화면으로 이동
   };
 
   // view
@@ -104,7 +107,7 @@ const Post = () => {
                 type="submit"
                 className="ml-auto px-5 py-2 bg-white text-churead-black rounded-3xl font-bold"
               >
-                게시
+                {isLoading ? "Loading..." : "게시"}
               </button>
             </div>
             {/* END: 게시 버튼 영역 */}
