@@ -5,6 +5,7 @@ import FeedItem from "../components/FeedItem";
 //import { initialFeedList, initialTags } from "../data/response";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
+import useSSE from "../hooks/useSSE";
 //
 
 const Home = () => {
@@ -17,6 +18,9 @@ const Home = () => {
   const currentUser = auth.currentUser;
 
   const [feedList, setFeedList] = useState([]);
+
+  //SSE 연결
+  const { isConnected } = useSSE();
 
   const handleEdit = (data) => {
     history(`/edit/${data._id}`); // edit페이지로 이동
@@ -70,6 +74,11 @@ const Home = () => {
     fetchPosts();
   }, [API_BASE_URL]);
 
+  useEffect(() => {
+    //로그인 된 상태가 아니면 로그인 페이지로 이동
+    !currentUser && history("/login");
+  });
+
   // view
   return (
     <div className="h-full pt-20 pb-[74px] overflow-hidden">
@@ -81,6 +90,9 @@ const Home = () => {
 
         <div>
           {/* START: 피드 영역 */}
+          <span className="block p-2 text-right text-sm">
+            {isConnected ? "🟢연결완료" : "🤣연결불가"}
+          </span>
           <ul>
             {feedList.map((feed) => (
               <FeedItem
